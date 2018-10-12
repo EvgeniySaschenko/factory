@@ -1,0 +1,22 @@
+{
+	"port" : 3000,
+	"db" : {
+		"host": "dvm02.mysql.tools",
+		"user": "dvm02_factory",
+		"password": "p48k63f5",
+		"database": "dvm02_factory",
+		"secret": "b@nderlok6%"
+	},
+	"session" : {
+		"secret" : "asdf45@fffggfg00",
+		"key" : "NODESESSID",
+		"resave" : false,
+		"saveUninitialized" : true,
+		"cokie" : {
+			"path" : "/",
+			"maxAge" : 6000000,
+			"secure" : false, 
+			"httpOnly" : true
+		}
+	}
+}

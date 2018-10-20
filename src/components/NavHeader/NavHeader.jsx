@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import axios from 'axios';
-
-import Nav from '../_proto/Nav/Nav.jsx';
+import Nav from './../_proto/Nav/Nav.jsx';
+import API from './../../api';
 
 class NavHeader extends Nav{
 	constructor(props){
@@ -17,12 +17,20 @@ export default connect(
 	},
 	dispatch => {
 		return{
-			init: (data) => {
-				data= require('../../data/nav.json');
-				dispatch({
-					type: 'INIT_NAV',
-					data: data
+			init: () => {
+				axios(API.user.getUserById( {id : 1} ))
+				.then((res)=>{
+					console.log( res.data )
 				})
+
+				axios('http://localhost:3000/nav')
+					.then((res)=>{
+						dispatch({
+							type: 'INIT_NAV',
+							data: res.data
+						})
+					})
+					.catch((err)=> console.log(err))
 			},
 
 			activeItem: (id) => {

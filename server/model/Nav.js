@@ -1,16 +1,33 @@
-let db = require('../ext/db');
+let db= require('../ext/db.js');
+const nconf= require('../config');
 
-class Nav {
+class Nav{
 	constructor(){
 		this.db= db;
+		this.msg= nconf.get('msg');
 	}
 
-	getAll(){
-		this.db.query('SELECT * FROM ff_nav', function (error, results, fields) {
-			if (error) throw error;
-			console.log('The solution is: ', results);
+	/** NAV */
+
+	getNav(){
+		return new Promise((resolve, reject)=>{
+			this.db.getConnection((err, connection)=>{
+				if(!err){
+					connection.query(`SELECT
+							*
+						FROM ff_nav
+						ORDER BY name ASC, id ASC`,
+						(err, data)=>{
+							data ? resolve(data) : reject( { data: this.msg.err, err : err } );
+							connection.release();
+						});
+				} else {
+					reject( { data: this.msg.err, err : err } );
+				}
+			});
 		});
 	}
+
 }
 
 module.exports= Nav;

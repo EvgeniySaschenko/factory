@@ -18,5 +18,37 @@
 			"secure" : false, 
 			"httpOnly" : true
 		}
+	},
+	"msg" : {
+		"add" : {
+			"msg" : "Запись добавлена",
+			"type" : "add"
+		},
+		"edit" : {
+			"msg" : "Запись отредактирована",
+			"type" : "edit"
+		},
+		"err" : {
+			"msg" : "Ошибка на сервере",
+			"type" : "err"
+		},
+		"exists" : {
+			"msg" : "Такая запись уже существует",
+			"type" : "exists"
+		},
+		"user" : {
+			"authErr" : {
+				"msg" : "Неправильный логин или пароль",
+				"type" : "auth-err"
+			},
+			"authExit" : {
+				"msg" : "Вы вышли из аккаунта",
+				"type" : "auth-exit"
+			},
+			"authLogin" : {
+				"msg" : "Вы вошли в аккаунт",
+				"type" : "auth-login"
+			}
+		}
 	}
 }

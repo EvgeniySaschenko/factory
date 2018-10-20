@@ -1,11 +1,11 @@
-var User= require('./User.js');
+const User= require('./User.js');
 
 class UserAuth extends User{
 	constructor(){
 		super();
 	}
 
-	addVisitor(idUser, ip, userAgent){
+	addVisitor(id_user, ip, userAgent){
 		return new Promise((resolve, reject)=>{
 			this.db.getConnection((err, connection)=>{
 				if(!err){
@@ -16,29 +16,32 @@ class UserAuth extends User{
 							user_agent)
 						VALUE (?, ?, ?)`,
 						[
-							idUser, 
+							id_user, 
 							ip, 
 							userAgent
 						],
-						(err, data)=>{
-							data.insertId ? resolve(data.insertId) : reject(err);
+						(err, data= false)=>{
+							const { insertId }= data;
+							insertId ? resolve(data.insertId) : reject( { data: this.msg.err, err : err } );
 							connection.release();
 						});
 				} else {
-					reject(err);
+					reject( { data: this.msg.err, err : err } );
 				}
 			});
 		});
 	}
 
-	login(login, pass, req){
+	login(req){
+		const { login, pass }= req.body;
+
 		return new Promise((resolve, reject)=>{
-			this.getUserLoginPass(login, pass)
+			this.getUserByLoginAndPass(login, pass)
 			.then((data)=>{
 				// Если авторизация удалась
 				if( data.length > 0 ){
 					let user= data[0];
-					let idUser= user.id;
+					let id_user= user.id;
 					let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 					let userAgent= JSON.stringify({ 
 						"browser" : req.useragent.browser,
@@ -48,29 +51,30 @@ class UserAuth extends User{
 					});
 
 					// Записываем поситетеля в БД
-					this.addVisitor(idUser, ip, userAgent)
+					this.addVisitor(id_user, ip, userAgent)
 						.then((data)=>{
 							Object.assign(user, {id_visitor : data});
 							req.session.user= user;
-							resolve(user);
+							resolve(Object.assign( {}, this.msg.user.authLogin, { data : user } ));
 						})
 						.catch((err)=>{
-							reject(err);
+							reject( { data: this.msg.err, err : err } );
 						})
 
 				} else {
 					// Если авторизация не удалась
-					resolve('Неправильный логин или пароль');
+					resolve({ data: this.msg.user.authErr });
 				}
 			})
 			.catch((err)=>{
-				console.log( err )
+				reject( { data: this.msg.err, err : err } );
 			})
 		});
 	}
 
-	exit(){
+	exit(req){
 		req.session.user= false;
+		return { data: this.msg.user.authExit };
 	}
 }
 

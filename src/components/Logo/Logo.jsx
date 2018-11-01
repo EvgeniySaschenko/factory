@@ -10,7 +10,7 @@ class Logo extends React.Component{
 	render(){
 		return(
 			<Link to="/" className={ `Logo Logo_${ this.props.clsMod }` }>
-				<img src={ require('./logo.png') } alt="logo" />
+				<img className="Logo__img" src={ require('./logo.png') } alt="logo" />
 			</Link>
 		)
 	}

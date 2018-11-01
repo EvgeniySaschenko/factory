@@ -1,32 +1,27 @@
 import { connect } from 'react-redux';
 import axios from 'axios';
-import Nav from './../_proto/Nav/Nav.jsx';
-import API from './../../api';
+import Nav from './Nav.jsx';
+import API from '../../api';
 
-class NavHeader extends Nav{
+class Nav_admin extends Nav{
 	constructor(props){
 		super(props);
 	}
 }
 
 export default connect(
-	store => {
+	store =>{
 		return{
-			data: store
+			data: store.nav_admin
 		}
 	},
-	dispatch => {
+	dispatch =>{
 		return{
 			init: () => {
-				axios(API.user.getUserById( {id : 1} ))
-				.then((res)=>{
-					console.log( res.data )
-				})
-
-				axios('http://localhost:3000/nav')
+				axios(API.nav.getNavByType({ type: 'admin'}))
 					.then((res)=>{
 						dispatch({
-							type: 'INIT_NAV',
+							type: 'INIT=Nav_admin',
 							data: res.data
 						})
 					})
@@ -35,10 +30,10 @@ export default connect(
 
 			activeItem: (id) => {
 				dispatch({
-					type: 'ACTIVE_ITEM_NAV',
+					type: 'ACTIVE_ITEM=Nav_admin',
 					id: id
 				})
 			}
 		}
 	}
-)(NavHeader);
+)(Nav_admin);

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Preloader from './../Preloader/Preloader.jsx';
 
 class Nav extends React.Component{
 	constructor(props){
@@ -16,8 +17,9 @@ class Nav extends React.Component{
 	}
 
 	render(){
-		let { nav } = this.props.data;
-		let templateNav= nav.map( (e, i) => {
+		let content;
+		let { data= [] } = this.props;
+		let templateNav= data.map( (e, i) => {
 			return(
 				<li className={ `Nav__list-item ${ !e.status ? '' : 'Nav__list-item_active' }`} key={ i }>
 					<Link className="Nav__list-link"
@@ -29,13 +31,18 @@ class Nav extends React.Component{
 			)
 		});
 
-		return(
-			<nav className={ `Nav Nav_${ this.props.clsMod }` }>
-				<ul className="Nav__list">
-					{ templateNav }
-				</ul>
-			</nav>
-		)
+		if(templateNav.length){
+			content=
+				<nav className={ `Nav Nav_${ this.props.clsMod }` }>
+					<ul className="Nav__list">
+						{ templateNav }
+					</ul>
+				</nav>;
+		} else {
+			content= <Preloader />
+		}
+
+		return( content )
 	}
 }
 

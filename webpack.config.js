@@ -83,7 +83,8 @@ const config = {
 		  	},
 		  	{ test: /\.ejs$/, 		loader: 'ejs-loader'	},
 	      { test: /\.jade$/,		loader: "jade-loader" 	},
-	      
+				
+				
 	      // View CSS Engines
 	      {
 					test: /\.css$/,
@@ -96,8 +97,8 @@ const config = {
 					test: /\.(scss|sass)$/,
 	      	use: ExtractTextPlugin.extract({
 	      		use: [
-	      			{ loader: "css-loader" },
-	      			{ loader: "sass-loader" }
+							{ loader: "css-loader" },
+							{ loader: "sass-loader" },
 	      		],
 	      		fallback: "style-loader"
 	      	})
@@ -111,7 +112,8 @@ const config = {
 	      		],
 	      		fallback: "style-loader"
 	      	})
-	      },
+				},
+
 				// View Image Engines
 				{
 					test: /\.(jpe?g|png|gif|svg)$/i,

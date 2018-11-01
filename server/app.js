@@ -5,6 +5,9 @@ var conf = require('./config');
 var logger = require('morgan');
 var session = require('express-session');
 var useragent = require('express-useragent');
+const formData = require("express-form-data");
+const os = require("os");
+
 
 var navRouter = require('./routes/nav');
 var userRouter = require('./routes/user');
@@ -17,7 +20,10 @@ var docRoutMapRouter = require('./routes/doc-rout-map');
 var docAutomatMapRouter = require('./routes/doc-automat-map');
 var errorRouter = require('./routes/error');
 
+const api= require('./api');
+
 var app = express();
+
 
 
 // view engine setup
@@ -46,8 +52,19 @@ app.use(useragent.express());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// parse data with connect-multiparty. 
+app.use(formData.parse({
+  uploadDir: os.tmpdir(),
+  autoClean: true
+}));
+app.use(formData.format());
+app.use(formData.stream());
+app.use(formData.union());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/api', api);
 
 app.use('/nav', navRouter);
 app.use('/user', userRouter);

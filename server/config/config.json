@@ -22,32 +22,39 @@
 	"msg" : {
 		"add" : {
 			"msg" : "Запись добавлена",
-			"type" : "add"
+			"type" : "add",
+			"alert" : "success"
 		},
 		"edit" : {
 			"msg" : "Запись отредактирована",
-			"type" : "edit"
+			"type" : "edit",
+			"alert" : "success"
 		},
 		"err" : {
 			"msg" : "Ошибка на сервере",
-			"type" : "err"
+			"type" : "err",
+			"alert" : "danger"
 		},
 		"exists" : {
 			"msg" : "Такая запись уже существует",
-			"type" : "exists"
+			"type" : "exists",
+			"alert" : "warning"
 		},
 		"user" : {
 			"authErr" : {
 				"msg" : "Неправильный логин или пароль",
-				"type" : "auth-err"
+				"type" : "auth-err",
+				"alert" : "warning"
 			},
 			"authExit" : {
 				"msg" : "Вы вышли из аккаунта",
-				"type" : "auth-exit"
+				"type" : "auth-exit",
+				"alert" : "success"
 			},
 			"authLogin" : {
 				"msg" : "Вы вошли в аккаунт",
-				"type" : "auth-login"
+				"type" : "auth-login",
+				"alert" : "success"
 			}
 		}
 	}

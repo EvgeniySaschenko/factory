@@ -26,10 +26,8 @@ class FormAddName extends React.Component{
 				<div className="form-group">
 					<label className="Form__label">Название</label>
 					<input ref="name" className="Form__field form-control" type="text" name="name" required="required"/>
-					<div className={`Form__alert ${ alert ? 'alert alert-' + alert : 'd-none' }`}>
-						{ msg }
-					</div>
 				</div>
+				<div className={`Form__alert ${ alert ? 'alert alert-' + alert : 'd-none' }`}> { msg } </div>
 				<button className="Form__btn btn btn-primary" type="submit" onClick={ this.submit.bind(this) }>Добавить</button>
 			</form>
 		)
